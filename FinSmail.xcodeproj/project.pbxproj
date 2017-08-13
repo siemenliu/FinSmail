@@ -1,0 +1,459 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03A766C01F3F0858002EC15D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03A766BA1F3F0849002EC15D /* Info.plist */; };
+		03A766C11F3F085B002EC15D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03A766B81F3F0849002EC15D /* Main.storyboard */; };
+		03A766C21F3F085D002EC15D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03A766B61F3F0849002EC15D /* LaunchScreen.storyboard */; };
+		03A766C31F3F0860002EC15D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03A766B51F3F0849002EC15D /* Assets.xcassets */; };
+		03A766C41F3F0866002EC15D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A766BE1F3F0849002EC15D /* AppDelegate.m */; };
+		03A766C51F3F0868002EC15D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A766BF1F3F0849002EC15D /* main.m */; };
+		03A766C91F3F08AC002EC15D /* XMEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A766C81F3F08AC002EC15D /* XMEntryViewController.m */; };
+		03ECEC5E1F3F117200042CAA /* XMAdminViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03ECEC5D1F3F117200042CAA /* XMAdminViewController.m */; };
+		C4EB40130E0AC9C2CDD7A37A /* Pods_FinSmail.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C141D0928640A03FA0D6CF31 /* Pods_FinSmail.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		03A7669A1F3F0797002EC15D /* FinSmail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinSmail.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		03A766B51F3F0849002EC15D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		03A766B71F3F0849002EC15D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		03A766B91F3F0849002EC15D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		03A766BA1F3F0849002EC15D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03A766BD1F3F0849002EC15D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		03A766BE1F3F0849002EC15D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		03A766BF1F3F0849002EC15D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		03A766C71F3F08AC002EC15D /* XMEntryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMEntryViewController.h; sourceTree = "<group>"; };
+		03A766C81F3F08AC002EC15D /* XMEntryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMEntryViewController.m; sourceTree = "<group>"; };
+		03ECEC5C1F3F117200042CAA /* XMAdminViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMAdminViewController.h; sourceTree = "<group>"; };
+		03ECEC5D1F3F117200042CAA /* XMAdminViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMAdminViewController.m; sourceTree = "<group>"; };
+		A774C0DC8DB6B5493659E442 /* Pods-FinSmail.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinSmail.release.xcconfig"; path = "Pods/Target Support Files/Pods-FinSmail/Pods-FinSmail.release.xcconfig"; sourceTree = "<group>"; };
+		AB3591152351C6831B25C27A /* Pods-FinSmail.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinSmail.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinSmail/Pods-FinSmail.debug.xcconfig"; sourceTree = "<group>"; };
+		C141D0928640A03FA0D6CF31 /* Pods_FinSmail.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FinSmail.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		03A766971F3F0797002EC15D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4EB40130E0AC9C2CDD7A37A /* Pods_FinSmail.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		03A766911F3F0796002EC15D = {
+			isa = PBXGroup;
+			children = (
+				03A7669C1F3F0797002EC15D /* FinSmail */,
+				03A7669B1F3F0797002EC15D /* Products */,
+				44977FC0C2D6EB6C848E1ECB /* Pods */,
+				BBFE36B365D131F392C50CC0 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		03A7669B1F3F0797002EC15D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				03A7669A1F3F0797002EC15D /* FinSmail.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		03A7669C1F3F0797002EC15D /* FinSmail */ = {
+			isa = PBXGroup;
+			children = (
+				03A766BB1F3F0849002EC15D /* Module */,
+				03A766B41F3F0849002EC15D /* Resource */,
+			);
+			path = FinSmail;
+			sourceTree = "<group>";
+		};
+		03A766B41F3F0849002EC15D /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				03A766B51F3F0849002EC15D /* Assets.xcassets */,
+				03A766B61F3F0849002EC15D /* LaunchScreen.storyboard */,
+				03A766B81F3F0849002EC15D /* Main.storyboard */,
+				03A766BA1F3F0849002EC15D /* Info.plist */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		03A766BB1F3F0849002EC15D /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				03ECEC5B1F3F115500042CAA /* Admin */,
+				03A766C61F3F0870002EC15D /* Entry */,
+				03A766BC1F3F0849002EC15D /* AppDelegate */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		03A766BC1F3F0849002EC15D /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				03A766BD1F3F0849002EC15D /* AppDelegate.h */,
+				03A766BE1F3F0849002EC15D /* AppDelegate.m */,
+				03A766BF1F3F0849002EC15D /* main.m */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		03A766C61F3F0870002EC15D /* Entry */ = {
+			isa = PBXGroup;
+			children = (
+				03A766C71F3F08AC002EC15D /* XMEntryViewController.h */,
+				03A766C81F3F08AC002EC15D /* XMEntryViewController.m */,
+			);
+			path = Entry;
+			sourceTree = "<group>";
+		};
+		03ECEC5B1F3F115500042CAA /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				03ECEC5C1F3F117200042CAA /* XMAdminViewController.h */,
+				03ECEC5D1F3F117200042CAA /* XMAdminViewController.m */,
+			);
+			path = Admin;
+			sourceTree = "<group>";
+		};
+		44977FC0C2D6EB6C848E1ECB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AB3591152351C6831B25C27A /* Pods-FinSmail.debug.xcconfig */,
+				A774C0DC8DB6B5493659E442 /* Pods-FinSmail.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		BBFE36B365D131F392C50CC0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C141D0928640A03FA0D6CF31 /* Pods_FinSmail.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		03A766991F3F0797002EC15D /* FinSmail */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03A766B01F3F0797002EC15D /* Build configuration list for PBXNativeTarget "FinSmail" */;
+			buildPhases = (
+				7C3D9BB319508F6A90A6C3B2 /* [CP] Check Pods Manifest.lock */,
+				03A766961F3F0797002EC15D /* Sources */,
+				03A766971F3F0797002EC15D /* Frameworks */,
+				03A766981F3F0797002EC15D /* Resources */,
+				3FBCE4335FA68A308AADADCE /* [CP] Embed Pods Frameworks */,
+				6918B95AB1F98BD914AE2F0B /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FinSmail;
+			productName = FinSmail;
+			productReference = 03A7669A1F3F0797002EC15D /* FinSmail.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		03A766921F3F0796002EC15D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = xiaoming;
+				TargetAttributes = {
+					03A766991F3F0797002EC15D = {
+						CreatedOnToolsVersion = 9.0;
+					};
+				};
+			};
+			buildConfigurationList = 03A766951F3F0796002EC15D /* Build configuration list for PBXProject "FinSmail" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 03A766911F3F0796002EC15D;
+			productRefGroup = 03A7669B1F3F0797002EC15D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				03A766991F3F0797002EC15D /* FinSmail */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		03A766981F3F0797002EC15D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03A766C21F3F085D002EC15D /* LaunchScreen.storyboard in Resources */,
+				03A766C01F3F0858002EC15D /* Info.plist in Resources */,
+				03A766C31F3F0860002EC15D /* Assets.xcassets in Resources */,
+				03A766C11F3F085B002EC15D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3FBCE4335FA68A308AADADCE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-FinSmail/Pods-FinSmail-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FinSmail/Pods-FinSmail-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6918B95AB1F98BD914AE2F0B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FinSmail/Pods-FinSmail-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7C3D9BB319508F6A90A6C3B2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FinSmail-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		03A766961F3F0797002EC15D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03A766C51F3F0868002EC15D /* main.m in Sources */,
+				03A766C91F3F08AC002EC15D /* XMEntryViewController.m in Sources */,
+				03A766C41F3F0866002EC15D /* AppDelegate.m in Sources */,
+				03ECEC5E1F3F117200042CAA /* XMAdminViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		03A766B61F3F0849002EC15D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03A766B71F3F0849002EC15D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		03A766B81F3F0849002EC15D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03A766B91F3F0849002EC15D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		03A766AE1F3F0797002EC15D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		03A766AF1F3F0797002EC15D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		03A766B11F3F0797002EC15D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB3591152351C6831B25C27A /* Pods-FinSmail.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = YP9EH2Q2E4;
+				INFOPLIST_FILE = "$(SRCROOT)/FinSmail/Resource/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.liuxiaoming.FinSmail;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		03A766B21F3F0797002EC15D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A774C0DC8DB6B5493659E442 /* Pods-FinSmail.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = YP9EH2Q2E4;
+				INFOPLIST_FILE = "$(SRCROOT)/FinSmail/Resource/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.liuxiaoming.FinSmail;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		03A766951F3F0796002EC15D /* Build configuration list for PBXProject "FinSmail" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03A766AE1F3F0797002EC15D /* Debug */,
+				03A766AF1F3F0797002EC15D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		03A766B01F3F0797002EC15D /* Build configuration list for PBXNativeTarget "FinSmail" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03A766B11F3F0797002EC15D /* Debug */,
+				03A766B21F3F0797002EC15D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 03A766921F3F0796002EC15D /* Project object */;
+}
