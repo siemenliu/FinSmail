@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03A766C01F3F0858002EC15D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03A766BA1F3F0849002EC15D /* Info.plist */; };
+		032C541F1F41F20600B1E856 /* XMCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 032C541E1F41F20600B1E856 /* XMCollectionView.m */; };
 		03A766C11F3F085B002EC15D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03A766B81F3F0849002EC15D /* Main.storyboard */; };
 		03A766C21F3F085D002EC15D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03A766B61F3F0849002EC15D /* LaunchScreen.storyboard */; };
 		03A766C31F3F0860002EC15D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03A766B51F3F0849002EC15D /* Assets.xcassets */; };
@@ -19,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		032C541D1F41F20600B1E856 /* XMCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMCollectionView.h; sourceTree = "<group>"; };
+		032C541E1F41F20600B1E856 /* XMCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMCollectionView.m; sourceTree = "<group>"; };
 		03A7669A1F3F0797002EC15D /* FinSmail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinSmail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03A766B51F3F0849002EC15D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		03A766B71F3F0849002EC15D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -48,6 +50,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		032C54181F41F16C00B1E856 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				032C54191F41F17800B1E856 /* XMCollectionView */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		032C54191F41F17800B1E856 /* XMCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				032C541D1F41F20600B1E856 /* XMCollectionView.h */,
+				032C541E1F41F20600B1E856 /* XMCollectionView.m */,
+			);
+			path = XMCollectionView;
+			sourceTree = "<group>";
+		};
+		03761F391F40227C003A6E66 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		03761F3A1F402289003A6E66 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		03A766911F3F0796002EC15D = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +122,7 @@
 		03A766BB1F3F0849002EC15D /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				032C54181F41F16C00B1E856 /* Common */,
 				03ECEC5B1F3F115500042CAA /* Admin */,
 				03A766C61F3F0870002EC15D /* Entry */,
 				03A766BC1F3F0849002EC15D /* AppDelegate */,
@@ -109,6 +143,8 @@
 		03A766C61F3F0870002EC15D /* Entry */ = {
 			isa = PBXGroup;
 			children = (
+				03761F3A1F402289003A6E66 /* Cell */,
+				03761F391F40227C003A6E66 /* View */,
 				03A766C71F3F08AC002EC15D /* XMEntryViewController.h */,
 				03A766C81F3F08AC002EC15D /* XMEntryViewController.m */,
 			);
@@ -201,9 +237,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03A766C21F3F085D002EC15D /* LaunchScreen.storyboard in Resources */,
-				03A766C01F3F0858002EC15D /* Info.plist in Resources */,
 				03A766C31F3F0860002EC15D /* Assets.xcassets in Resources */,
+				03A766C21F3F085D002EC15D /* LaunchScreen.storyboard in Resources */,
 				03A766C11F3F085B002EC15D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,6 +308,7 @@
 				03A766C91F3F08AC002EC15D /* XMEntryViewController.m in Sources */,
 				03A766C41F3F0866002EC15D /* AppDelegate.m in Sources */,
 				03ECEC5E1F3F117200042CAA /* XMAdminViewController.m in Sources */,
+				032C541F1F41F20600B1E856 /* XMCollectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

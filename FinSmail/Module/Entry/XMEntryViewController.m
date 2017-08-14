@@ -9,11 +9,12 @@
 #import "XMEntryViewController.h"
 #import <Masonry/Masonry.h>
 #import "XMAdminViewController.h"
+#import "XMCollectionView.h"
 
-@interface XMEntryCell : UICollectionViewCell
+@interface XMEntryCollectionCell : UICollectionViewCell
 
 @end
-@implementation XMEntryCell
+@implementation XMEntryCollectionCell
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smail"]];
@@ -26,25 +27,102 @@
 }
 @end
 
-@interface XMEntryViewController ()
-@property (nonatomic, strong) NSDictionary<NSDate *, NSArray<XMAdminSmailRecordEntity *> *> *dataSource;
-@property (nonatomic, strong) NSArray<NSDate *> *dateSorted;
+@interface XMEntryCell : UITableViewCell <UICollectionViewDelegate, UICollectionViewDataSource>
+@property (nonatomic, strong) XMAdminSmailRecordEntity *entity;
+
+@property (nonatomic, strong) UILabel *labelDesc;
+@property (nonatomic, strong) XMCollectionView *collectionView;
 @end
 
-@implementation XMEntryViewController
+@implementation XMEntryCell
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        [self setupView];
+    }
+    return self;
+}
+
+- (void)setupView {
+    UIView *container = [[UIView alloc] init];
+    [self.contentView addSubview:container];
     
-    [self.collectionView registerClass:[XMEntryCell class] forCellWithReuseIdentifier:NSStringFromClass([XMEntryCell class])];
-    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([UICollectionReusableView class])];
+    UILabel *labelDesc = [[UILabel alloc] init];
+    self.labelDesc = labelDesc;
+    [container addSubview:labelDesc];
     
-    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.minimumLineSpacing = 4;
     layout.minimumInteritemSpacing = 4;
     layout.itemSize = [self itemSize];
-    layout.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 44);
+    XMCollectionView *collectionView = [[XMCollectionView alloc] initWithFrame:self.contentView.bounds collectionViewLayout:layout];
+    self.collectionView = collectionView;
+    [container addSubview:collectionView];
+    [container mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(UIEdgeInsetsMake(12, 16, 12, 16));
+    }];
     
+    labelDesc.numberOfLines = 0;
+    labelDesc.text = @"no desc";
+    [labelDesc mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.mas_equalTo(0);
+    }];
+    
+    [collectionView registerClass:[XMEntryCollectionCell class] forCellWithReuseIdentifier:NSStringFromClass([XMEntryCollectionCell class])];
+    collectionView.delegate = self;
+    collectionView.dataSource = self;
+    collectionView.backgroundColor = [UIColor whiteColor];
+    [collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(labelDesc.mas_bottom).offset(12);
+        make.left.right.mas_equalTo(0);
+        make.bottom.mas_equalTo(0);
+        make.height.mas_greaterThanOrEqualTo(44);
+    }];
+}
+
+- (CGSize)itemSize {
+    NSInteger count = 10;
+    CGFloat width = self.contentView.frame.size.width;
+    CGFloat widthRemoveSpace = width - (4 * (count + 1));
+    CGFloat widthFinal = widthRemoveSpace / count;
+    return CGSizeMake(widthFinal, widthFinal);
+}
+
+- (void)setEntity:(XMAdminSmailRecordEntity *)entity {
+    _entity = entity;
+    
+    self.labelDesc.text = entity.desc;
+    [self.collectionView reloadData];
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.entity.countStar;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    XMEntryCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([XMEntryCollectionCell class]) forIndexPath:indexPath];
+
+    return cell;
+}
+@end
+
+@interface XMEntryViewController()
+@property (nonatomic, strong) NSDictionary<NSString *, NSArray<XMAdminSmailRecordEntity *> *> *dataSource;
+@property (nonatomic, strong) NSArray<NSString *> *dateSorted;
+@end
+
+@implementation XMEntryViewController
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    // 视图基础
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    // 右上角action按钮
     UIBarButtonItem *itemAdmin = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(handleAction:)];
     
     UIBarButtonItem *itemRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRedo target:self action:@selector(refresh)];
@@ -57,13 +135,22 @@
     [arrItem addObject:itemRefresh];
     [self.navigationItem setRightBarButtonItems:arrItem animated:YES];
     
+    // tableview配置
+    [self.tableView registerClass:[XMEntryCell class] forCellReuseIdentifier:NSStringFromClass([XMEntryCell class])];
+    
     [self refresh];
+}
+
+- (void)handleAction:(id)sender {
+    XMAdminViewController *admin = [[XMAdminViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:admin animated:YES];
 }
 
 - (void)refresh {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent: @"dataArray.archive"];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent: @"data.json"];
+    
     NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
     self.dataSource = [data objectForKey:@"mapDate"];
     
@@ -75,64 +162,38 @@
         return [date1 compare:date2];
     }];
     
-    [self.collectionView reloadData];
+    // 标题更新
+    self.title = [NSString stringWithFormat:@"%@", [data objectForKey:@"countTotal"]];
+    
+    // 数据更新
+    [self.tableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
-- (void)handleAction:(id)sender {
-    XMAdminViewController *adminVC = [[XMAdminViewController alloc] initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:adminVC animated:YES];
-}
+#pragma mark - delegate and datasource
 
-- (CGSize)itemSize {
-    NSInteger count = 5;
-    CGFloat width = self.view.frame.size.width;
-    CGFloat widthRemoveSpace = width - (4 * (count + 1));
-    CGFloat widthFinal = widthRemoveSpace / count;
-    return CGSizeMake(widthFinal, widthFinal);
-}
-
-#pragma mark - datasource and delegate
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.dateSorted.count;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSDate *dateKey = [self.dateSorted objectAtIndex:section];
-    NSArray<XMAdminSmailRecordEntity *> *listEntity = [self.dataSource objectForKey:dateKey];
-    
-    return listEntity.count;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSString *dateString = [self.dateSorted objectAtIndex:section];
+    NSArray <XMAdminSmailRecordEntity *> *entityList = [self.dataSource objectForKey:dateString];
+    return entityList.count;
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    
-    NSDate *date = [self.dateSorted objectAtIndex:indexPath.section];
-    
-    UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([UICollectionReusableView class]) forIndexPath:indexPath];
-    
-    UILabel *label = [headerView viewWithTag:'t'];
-    if (!label) {
-        UILabel *label = [[UILabel alloc] init];
-        label.tag = 't';
-        label.text = [date description];
-        [headerView addSubview:label];
-        [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.mas_equalTo(headerView);
-            make.left.mas_equalTo(16);
-            make.right.mas_equalTo(-16);
-        }];
-    }
-    label.text = [date description];
-    
-    return headerView;
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [self.dateSorted objectAtIndex:section];
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    XMEntryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([XMEntryCell class]) forIndexPath:indexPath];
-    
-    
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    XMEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([XMEntryCell class]) forIndexPath:indexPath];
+    NSString *dateString = [self.dateSorted objectAtIndex:indexPath.section];
+    NSArray <XMAdminSmailRecordEntity *> *entityList = [self.dataSource objectForKey:dateString];
+    XMAdminSmailRecordEntity *entity = [entityList objectAtIndex:indexPath.row];
+    cell.entity = entity;
     return cell;
 }
-    
 @end

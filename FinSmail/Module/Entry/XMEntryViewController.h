@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface XMEntryViewController : UICollectionViewController
+@interface XMEntryViewController : UITableViewController
 
 @end

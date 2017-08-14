@@ -8,13 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface XMAdminSmailRecordEntity : NSObject <NSCoding>
+@interface XMAdminSmailRecordEntity : NSObject
 @property (nonatomic, copy) NSString *dateHappen;
 @property (nonatomic, copy) NSString *desc;
 @property (nonatomic, assign) NSInteger countStar;
 - (NSDate *)dateFromDateHappen;
 @end
 
-@interface XMAdminViewController : UIViewController
+@interface XMAdminSmailWrapEntity : NSObject
+@property (nonatomic, assign) NSInteger countTotal;
+@property (nonatomic, copy) NSDictionary<NSString *, XMAdminSmailRecordEntity *> *mapDate;
+@end
 
+@interface XMAdminViewController : UIViewController
++ (XMAdminSmailWrapEntity *)wrapData;
 @end

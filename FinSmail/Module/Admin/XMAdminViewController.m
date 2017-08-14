@@ -9,22 +9,10 @@
 #import "XMAdminViewController.h"
 #import <Masonry/Masonry.h>
 
+@implementation XMAdminSmailWrapEntity
+@end
 
 @implementation XMAdminSmailRecordEntity
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeObject:self.dateHappen forKey:@"dateHappen"];
-    [aCoder encodeObject:self.desc forKey:@"desc"];
-    [aCoder encodeObject:@(self.countStar) forKey:@"countStar"];
-}
-- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [self init]) {
-        self.dateHappen = [aDecoder decodeObjectForKey:@"dateHappen"];
-        self.desc = [aDecoder decodeObjectForKey:@"desc"];
-        self.countStar = [[aDecoder decodeObjectForKey:@"countStar"] integerValue];
-    }
-    return self;
-}
-
 - (NSDate *)dateFromDateHappen {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy-MM-dd";
@@ -41,8 +29,30 @@
 
 @implementation XMAdminViewController
 
+- (void)authCheck {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"输入密码" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"密码";
+        textField.secureTextEntry = YES;
+    }];
+    UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if (alert.textFields.firstObject) {
+            UITextField *tf = alert.textFields.firstObject;
+            if (![tf.text isEqualToString:@"helloxiaoming"]) {
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            [alert dismissViewControllerAnimated:YES completion:nil];
+        }
+    }];
+    [alert addAction:actionOk];
+    [self.navigationController presentViewController:alert animated:YES completion:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self authCheck];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -121,7 +131,7 @@
 - (void)cleanAllArchive {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent: @"dataArray.archive"];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent: @"data.json"];
     
     NSError *error;
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -136,38 +146,84 @@
 - (void)handleAdd:(id)sender {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent: @"dataArray.archive"];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent: @"data.json"];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy-MM-dd";
     NSString *dateHappen = [formatter stringFromDate:self.pickerDate.date];
     
-    XMAdminSmailRecordEntity *entity = [[XMAdminSmailRecordEntity alloc] init];
-    entity.dateHappen = dateHappen;
-    entity.desc = self.tfDesc.text;
-    entity.countStar = self.countStar?:1;
+    NSDictionary *entityDic = @{
+                                @"dateHappen": dateHappen,
+                                @"desc": self.tfDesc.text?:@"No Description",
+                                @"countStar": @(self.countStar?:0)
+                                };
+//    XMAdminSmailRecordEntity *entity = [[XMAdminSmailRecordEntity alloc] init];
+//    entity.dateHappen = dateHappen;
+//    entity.desc = self.tfDesc.text;
+//    entity.countStar = self.countStar?:0;
+    NSError *error;
+    NSData *dataJSON = [NSData dataWithContentsOfFile:filePath];
     
-    NSMutableDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
+    NSMutableDictionary *data = nil;
+    
+    if (dataJSON) {
+        data = [NSJSONSerialization JSONObjectWithData:dataJSON options:kNilOptions error:&error];
+        data = [data mutableCopy];
+        if (error) {
+            [self alert:error.localizedDescription];
+        }
+    }
+    
+    
     if (!data) {
         data = [NSMutableDictionary dictionary];
     }
-    NSMutableDictionary *mapDate = [data objectForKey:@"mapDate"];
+    NSMutableDictionary *mapDate = [[data objectForKey:@"mapDate"] mutableCopy];
     if (!mapDate) {
         mapDate = [NSMutableDictionary dictionary];
         [data setObject:mapDate forKey:@"mapDate"];
     }
-    NSMutableArray *list = [mapDate objectForKey:entity.dateHappen];
+    NSMutableArray *list = [[mapDate objectForKey:dateHappen] mutableCopy];
     if (!list) {
         list = [NSMutableArray array];
-        [mapDate setObject:list forKey:entity.dateHappen];
+        [mapDate setObject:list forKey:dateHappen];
     }
-    [list addObject:entity];
+    [list addObject:entityDic];
     
-    if ([NSKeyedArchiver archiveRootObject:data toFile:filePath]) {
-        NSLog(@"save success");
-    } else {
-        NSLog(@"save fail");
+    // 计算总值
+    NSInteger countStarTotal = 0;
+    NSArray<NSString *> *dateStringList = [mapDate allKeys];
+    for (NSString *dateString in dateStringList) {
+        NSArray<NSDictionary *> *entityList = [mapDate objectForKey:dateString];
+        for (NSDictionary *entity in entityList) {
+            countStarTotal = countStarTotal + [entity[@"countStar"] integerValue];
+        }
     }
+    [data setObject:@(countStarTotal) forKey:@"countTotal"];
+    
+    // json 转换
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *jsonStr =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    if (!error) {
+        [jsonStr writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    }
+    
+    if (error) {
+        [self alert:error.localizedDescription];
+    } else {
+        [self alert:@"success"];
+    }
+}
+
+- (void)alert:(NSString *)message {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:actionOk];
+    
+    alert.title = message;
+    
+    [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
 
 // returns the number of 'columns' to display.
@@ -181,11 +237,11 @@
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [NSString stringWithFormat:@"%ld", row+1];
+    return [NSString stringWithFormat:@"%ld", row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.countStar = row + 1;
+    self.countStar = row;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

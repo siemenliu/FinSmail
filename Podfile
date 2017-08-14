@@ -7,5 +7,5 @@ target 'FinSmail' do
   use_frameworks!
 
   # Pods for FinSmail
-  pod 'Masonry'
+  pod 'Masonry', :inhibit_warnings => true
 end
