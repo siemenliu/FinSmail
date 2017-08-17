@@ -1,3 +1,5 @@
+ali_source 'alibaba-specs'
+ali_source 'alibaba-specs-mirror'
 source "https://github.com/CocoaPods/Specs.git"
 
 platform :ios, '9.0'
@@ -8,4 +10,5 @@ target 'FinSmail' do
 
   # Pods for FinSmail
   pod 'Masonry', :inhibit_warnings => true
+  pod 'YYModel'
 end

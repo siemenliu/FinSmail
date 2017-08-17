@@ -17,7 +17,8 @@
 
 @interface XMAdminSmailWrapEntity : NSObject
 @property (nonatomic, assign) NSInteger countTotal;
-@property (nonatomic, copy) NSDictionary<NSString *, XMAdminSmailRecordEntity *> *mapDate;
+@property (nonatomic, copy) NSDictionary<NSString *, NSArray<XMAdminSmailRecordEntity *> *> *mapDate;
+@property (nonatomic, copy) NSArray<NSString *> *dateSorted;
 @end
 
 @interface XMAdminViewController : UIViewController

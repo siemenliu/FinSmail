@@ -8,8 +8,34 @@
 
 #import "XMAdminViewController.h"
 #import <Masonry/Masonry.h>
+#import <YYModel/YYModel.h>
 
 @implementation XMAdminSmailWrapEntity
+- (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
+    
+    // ===== 实例化mapDate
+    NSDictionary *mapDate = self.mapDate;
+    NSArray<NSString *> *dateList = [mapDate allKeys];
+    NSMutableDictionary *dicResult = [NSMutableDictionary dictionary];
+    for (NSString *date in dateList) {
+        NSArray<NSDictionary *> *recordList = [mapDate objectForKey:date];
+        NSMutableArray<XMAdminSmailRecordEntity *> *recordListReplaced = [NSMutableArray arrayWithCapacity:recordList.count];
+        for (NSDictionary *itemDic in recordList) {
+            XMAdminSmailRecordEntity *record = [XMAdminSmailRecordEntity yy_modelWithJSON:itemDic];
+            [recordListReplaced addObject:record];
+        }
+        
+        [dicResult setObject:recordListReplaced forKey:date];
+    }
+    
+    _mapDate = dicResult;
+    
+    // ===== dateSorted
+    
+    
+    
+    return YES;
+}
 @end
 
 @implementation XMAdminSmailRecordEntity
@@ -143,10 +169,35 @@
     }
 }
 
-- (void)handleAdd:(id)sender {
++ (NSString *)filePath {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent: @"data.json"];
+    return filePath;
+}
+
++ (XMAdminSmailWrapEntity *)wrapData {
+    NSString *filePath = [XMAdminViewController filePath];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    
+    if (!data) {
+        return nil;
+    }
+    
+    NSError *error;
+    NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    XMAdminSmailWrapEntity *wrapEntity = nil;
+    if (!error) {
+        wrapEntity = [XMAdminSmailWrapEntity yy_modelWithJSON:dataDic];
+    } else {
+        NSLog(@"%@", error.localizedDescription);
+    }
+    
+    return wrapEntity;
+}
+
+- (void)handleAdd:(id)sender {
+    NSString *filePath = [XMAdminViewController filePath];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy-MM-dd";
@@ -181,14 +232,14 @@
     NSMutableDictionary *mapDate = [[data objectForKey:@"mapDate"] mutableCopy];
     if (!mapDate) {
         mapDate = [NSMutableDictionary dictionary];
-        [data setObject:mapDate forKey:@"mapDate"];
     }
+    [data setObject:mapDate forKey:@"mapDate"];
     NSMutableArray *list = [[mapDate objectForKey:dateHappen] mutableCopy];
     if (!list) {
         list = [NSMutableArray array];
-        [mapDate setObject:list forKey:dateHappen];
     }
     [list addObject:entityDic];
+    [mapDate setObject:list forKey:dateHappen];
     
     // 计算总值
     NSInteger countStarTotal = 0;
@@ -200,6 +251,16 @@
         }
     }
     [data setObject:@(countStarTotal) forKey:@"countTotal"];
+    
+    // 排序
+    NSArray<NSString *> *dataSorted = [[mapDate allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSString * _Nonnull obj1, NSString *  _Nonnull obj2) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyy-MM-dd";
+        NSDate *date1 = [formatter dateFromString:obj1];
+        NSDate *date2 = [formatter dateFromString:obj2];
+        return [date1 compare:date2];
+    }];
+    [data setObject:dataSorted forKey:@"dateSorted"];
     
     // json 转换
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted error:&error];

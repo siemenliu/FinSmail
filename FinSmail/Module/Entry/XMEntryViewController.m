@@ -111,8 +111,7 @@
 @end
 
 @interface XMEntryViewController()
-@property (nonatomic, strong) NSDictionary<NSString *, NSArray<XMAdminSmailRecordEntity *> *> *dataSource;
-@property (nonatomic, strong) NSArray<NSString *> *dateSorted;
+@property (nonatomic, strong) XMAdminSmailWrapEntity *wrapEntity;
 @end
 
 @implementation XMEntryViewController
@@ -147,23 +146,11 @@
 }
 
 - (void)refresh {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent: @"data.json"];
-    
-    NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
-    self.dataSource = [data objectForKey:@"mapDate"];
-    
-    self.dateSorted = [[self.dataSource allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSString * _Nonnull obj1, NSString *  _Nonnull obj2) {
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyyy-MM-dd";
-        NSDate *date1 = [formatter dateFromString:obj1];
-        NSDate *date2 = [formatter dateFromString:obj2];
-        return [date1 compare:date2];
-    }];
+    XMAdminSmailWrapEntity *wrapEntity = [XMAdminViewController wrapData];
+    self.wrapEntity = wrapEntity;
     
     // 标题更新
-    self.title = [NSString stringWithFormat:@"%@", [data objectForKey:@"countTotal"]];
+    self.title = [NSString stringWithFormat:@"%ld", wrapEntity.countTotal];
     
     // 数据更新
     [self.tableView reloadData];
@@ -175,23 +162,23 @@
 #pragma mark - delegate and datasource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.dateSorted.count;
+    return self.wrapEntity.dateSorted.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSString *dateString = [self.dateSorted objectAtIndex:section];
-    NSArray <XMAdminSmailRecordEntity *> *entityList = [self.dataSource objectForKey:dateString];
+    NSString *dateString = [self.wrapEntity.dateSorted objectAtIndex:section];
+    NSArray <XMAdminSmailRecordEntity *> *entityList = [self.wrapEntity.mapDate objectForKey:dateString];
     return entityList.count;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self.dateSorted objectAtIndex:section];
+    return [self.wrapEntity.dateSorted objectAtIndex:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     XMEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([XMEntryCell class]) forIndexPath:indexPath];
-    NSString *dateString = [self.dateSorted objectAtIndex:indexPath.section];
-    NSArray <XMAdminSmailRecordEntity *> *entityList = [self.dataSource objectForKey:dateString];
+    NSString *dateString = [self.wrapEntity.dateSorted objectAtIndex:indexPath.section];
+    NSArray <XMAdminSmailRecordEntity *> *entityList = [self.wrapEntity.mapDate objectForKey:dateString];
     XMAdminSmailRecordEntity *entity = [entityList objectAtIndex:indexPath.row];
     cell.entity = entity;
     return cell;
