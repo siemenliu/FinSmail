@@ -9,6 +9,8 @@
 #import "XMAdminViewController.h"
 #import <Masonry/Masonry.h>
 #import <YYModel/YYModel.h>
+#import <SVProgressHUD/SVProgressHUD.h>
+#import "XMLoginViewController.h"
 
 @import Wilddog;
 
@@ -80,12 +82,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self authCheck];
-    
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIBarButtonItem *btnCleanAll = [[UIBarButtonItem alloc] initWithTitle:@"clean" style:UIBarButtonItemStylePlain target:self action:@selector(cleanAllArchive)];
-    self.navigationItem.rightBarButtonItem = btnCleanAll;
+    UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithTitle:@"refresh" style:UIBarButtonItemStylePlain target:self action:@selector(refresh)];
+    self.navigationItem.rightBarButtonItem = btnRefresh;
     
     UIScrollView *scrollView = [[UIScrollView alloc] init];
     [self.view addSubview:scrollView];
@@ -122,6 +122,10 @@
     UIButton *btnAdd = [UIButton buttonWithType:UIButtonTypeContactAdd];
     [container addSubview:btnAdd];
     
+    /// 登出
+    UIButton *btnLogout = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [container addSubview:btnLogout];
+    
     
     [picker setDatePickerMode:UIDatePickerModeDate];
     [picker mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -151,30 +155,34 @@
     [btnAdd mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(pickerView);
         make.top.mas_equalTo(pickerView.mas_bottom).offset(12);
-        make.bottom.mas_lessThanOrEqualTo(16);
+        make.bottom.mas_lessThanOrEqualTo(-16);
         make.height.mas_equalTo(44);
+    }];
+    
+    btnLogout.layer.borderColor = [UIColor grayColor].CGColor;
+    btnLogout.layer.borderWidth = 1.f / [UIScreen mainScreen].scale;
+    btnLogout.layer.cornerRadius = 3;
+    [btnLogout setTitle:@"登出" forState:UIControlStateNormal];
+    [btnLogout addTarget:self action:@selector(handleLogout:) forControlEvents:UIControlEventTouchUpInside];
+    [btnLogout mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(btnAdd.mas_bottom).offset(16);
+        make.left.right.mas_equalTo(btnAdd);
+        make.bottom.mas_lessThanOrEqualTo(-16);
     }];
 }
 
-- (void)cleanAllArchive {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent: @"data.json"];
-    
-    NSError *error;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL success = [fileManager removeItemAtPath:filePath error:&error];
-    if (success) {
-        NSLog(@"remove success");
-    } else {
-        NSLog(@"Could not delete file -:%@ ",[error localizedDescription]);
-    }
+- (void)refresh {
+    [self addRecord:nil];
 }
 
-+ (NSString *)filePath {
+- (void)handleLogout:(id)sender {
+    [XMLoginViewController logout];
+}
+
++ (NSString *)filePathUser {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent: @"data.json"];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent: @"user"];
     return filePath;
 }
 
@@ -213,7 +221,7 @@
 }
 
 - (void)handleAdd:(id)sender {
-    
+    [SVProgressHUD show];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy-MM-dd";
@@ -224,12 +232,16 @@
                                 @"desc": self.tfDesc.text?:@"No Description",
                                 @"countStar": @(self.countStar?:0)
                                 };
-//    XMAdminSmailRecordEntity *entity = [[XMAdminSmailRecordEntity alloc] init];
-//    entity.dateHappen = dateHappen;
-//    entity.desc = self.tfDesc.text;
-//    entity.countStar = self.countStar?:0;
     
+    XMAdminSmailRecordEntity *record = [XMAdminSmailRecordEntity yy_modelWithJSON:entityDic];
+    
+    [self addRecord:record];
+}
+
+- (void)addRecord:(XMAdminSmailRecordEntity *)record {
     [self.class wrapDataWithComplete:^(XMAdminSmailWrapEntity *entity, NSError *error) {
+        
+        // ==== 初始化结构
         NSMutableDictionary *data = [[entity yy_modelToJSONObject] mutableCopy];
         if (!data) {
             data = [NSMutableDictionary dictionary];
@@ -239,14 +251,19 @@
             mapDate = [NSMutableDictionary dictionary];
         }
         [data setObject:mapDate forKey:@"mapDate"];
-        NSMutableArray *list = [[mapDate objectForKey:dateHappen] mutableCopy];
-        if (!list) {
-            list = [NSMutableArray array];
-        }
-        [list addObject:entityDic];
-        [mapDate setObject:list forKey:dateHappen];
         
-        // 计算总值
+        // ==== 新增记录 如果有的话
+        if (record) {
+            NSMutableArray *list = [[mapDate objectForKey:record.dateHappen] mutableCopy];
+            if (!list) {
+                list = [NSMutableArray array];
+            }
+            [list addObject:[record yy_modelToJSONObject]];
+            [mapDate setObject:list forKey:record.dateHappen];
+        }
+        
+        
+        // ==== 计算总值
         NSInteger countStarTotal = 0;
         NSArray<NSString *> *dateStringList = [mapDate allKeys];
         for (NSString *dateString in dateStringList) {
@@ -257,13 +274,13 @@
         }
         [data setObject:@(countStarTotal) forKey:@"countTotal"];
         
-        // 排序
+        // ==== 排序
         NSArray<NSString *> *dataSorted = [[mapDate allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSString * _Nonnull obj1, NSString *  _Nonnull obj2) {
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             formatter.dateFormat = @"yyyy-MM-dd";
             NSDate *date1 = [formatter dateFromString:obj1];
             NSDate *date2 = [formatter dateFromString:obj2];
-            return [date1 compare:date2];
+            return [date2 compare:date1];
         }];
         [data setObject:dataSorted forKey:@"dateSorted"];
         
@@ -274,6 +291,7 @@
             //获取一个指向根节点的 WDGSyncReference 实例
             WDGSyncReference *ref = [[WDGSync sync] reference];
             [ref setValue:data withCompletionBlock:^(NSError * _Nullable error, WDGSyncReference * _Nonnull ref) {
+                [SVProgressHUD dismissAnimated:YES];
                 if (error) {
                     [self alert:error.localizedDescription];
                 } else {
@@ -286,8 +304,6 @@
             [self alert:error.localizedDescription];
         }
     }];
-    
-    
 }
 
 - (void)alert:(NSString *)message {

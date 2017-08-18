@@ -1,9 +1,9 @@
-FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/Masonry" "$PODS_CONFIGURATION_BUILD_DIR/YYModel" "${PODS_ROOT}/WilddogCore" "${PODS_ROOT}/WilddogSync"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/Masonry" "$PODS_CONFIGURATION_BUILD_DIR/SVProgressHUD" "$PODS_CONFIGURATION_BUILD_DIR/YYModel" "${PODS_ROOT}/WilddogAuth" "${PODS_ROOT}/WilddogCore" "${PODS_ROOT}/WilddogSync"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) ${PODS_ROOT}/Wilddog/Wilddog/Sources $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Wilddog" "${PODS_ROOT}/Headers/Public/WilddogCore" "${PODS_ROOT}/Headers/Public/WilddogSync"
+HEADER_SEARCH_PATHS = $(inherited) ${PODS_ROOT}/Wilddog/Wilddog/Sources $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Wilddog" "${PODS_ROOT}/Headers/Public/WilddogAuth" "${PODS_ROOT}/Headers/Public/WilddogCore" "${PODS_ROOT}/Headers/Public/WilddogSync"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/Masonry/Masonry.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/YYModel/YYModel.framework/Headers" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Wilddog" -isystem "${PODS_ROOT}/Headers/Public/WilddogCore" -isystem "${PODS_ROOT}/Headers/Public/WilddogSync"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"icucore" -l"sqlite3" -framework "CFNetwork" -framework "Masonry" -framework "MobileCoreServices" -framework "Security" -framework "SystemConfiguration" -framework "WilddogCore" -framework "WilddogSync" -framework "YYModel"
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/Masonry/Masonry.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/SVProgressHUD/SVProgressHUD.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/YYModel/YYModel.framework/Headers" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Wilddog" -isystem "${PODS_ROOT}/Headers/Public/WilddogAuth" -isystem "${PODS_ROOT}/Headers/Public/WilddogCore" -isystem "${PODS_ROOT}/Headers/Public/WilddogSync"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"icucore" -l"sqlite3" -framework "CFNetwork" -framework "Masonry" -framework "MobileCoreServices" -framework "SVProgressHUD" -framework "Security" -framework "SystemConfiguration" -framework "WilddogAuth" -framework "WilddogCore" -framework "WilddogSync" -framework "YYModel"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.

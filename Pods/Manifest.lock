@@ -1,10 +1,16 @@
 PODS:
   - Masonry (1.0.2)
+  - SVProgressHUD (1.1.1)
+  - Wilddog/Auth (2.3.11):
+    - Wilddog/Public
+    - WilddogAuth (~> 2.0.7)
   - Wilddog/Public (2.3.11):
     - WilddogCore (~> 2.0.11)
   - Wilddog/Sync (2.3.11):
     - Wilddog/Public
     - WilddogSync (~> 2.3.11)
+  - WilddogAuth (2.0.7):
+    - WilddogCore (~> 2.0.2)
   - WilddogCore (2.0.11)
   - WilddogSync (2.3.11):
     - WilddogCore (~> 2.0.11)
@@ -12,16 +18,20 @@ PODS:
 
 DEPENDENCIES:
   - Masonry
+  - SVProgressHUD
+  - Wilddog/Auth
   - Wilddog/Sync
   - YYModel
 
 SPEC CHECKSUMS:
   Masonry: 1a8c8de06540777a02c86cc2abfc3950ede7cd22
+  SVProgressHUD: 3c03031dff855ecbf64f89b1d5cf193f7ff0aa9b
   Wilddog: 26d5f0f8d75a03381b0f73ce632cb896d978b1bd
+  WilddogAuth: 6c5f364277547490eed7e5a5c955b45e544e8ebf
   WilddogCore: 515371b98a3298ced567033df3348f9f0e3b2dc0
   WilddogSync: fb3dc0c95440d8be8f382100d1677b56c72f1b69
   YYModel: 610bd0c0a0c707f7676874087e37aa4f40fb92de
 
-PODFILE CHECKSUM: 75a50b828c7f27caa30cf564d2e9b616dd8a2cce
+PODFILE CHECKSUM: 06c1efeed79f3a2e7360988b8aa4a34216ec74aa
 
 COCOAPODS: 1.3.1

@@ -12,4 +12,6 @@ target 'FinSmail' do
   pod 'Masonry', :inhibit_warnings => true
   pod 'YYModel'
   pod 'Wilddog/Sync'
+  pod 'Wilddog/Auth'
+  pod 'SVProgressHUD'
 end

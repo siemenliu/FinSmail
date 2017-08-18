@@ -22,5 +22,6 @@
 @end
 
 @interface XMAdminViewController : UIViewController
++ (NSString *)filePathUser;
 + (void)wrapDataWithComplete:(void (^)(XMAdminSmailWrapEntity *entity, NSError *error))complete;
 @end

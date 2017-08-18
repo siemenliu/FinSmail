@@ -14,6 +14,7 @@
 		03A766C41F3F0866002EC15D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A766BE1F3F0849002EC15D /* AppDelegate.m */; };
 		03A766C51F3F0868002EC15D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A766BF1F3F0849002EC15D /* main.m */; };
 		03A766C91F3F08AC002EC15D /* XMEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A766C81F3F08AC002EC15D /* XMEntryViewController.m */; };
+		03B2352A1F4731DB00CC71D6 /* XMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B235291F4731DB00CC71D6 /* XMLoginViewController.m */; };
 		03ECEC5E1F3F117200042CAA /* XMAdminViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03ECEC5D1F3F117200042CAA /* XMAdminViewController.m */; };
 		C4EB40130E0AC9C2CDD7A37A /* Pods_FinSmail.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C141D0928640A03FA0D6CF31 /* Pods_FinSmail.framework */; };
 /* End PBXBuildFile section */
@@ -31,6 +32,8 @@
 		03A766BF1F3F0849002EC15D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		03A766C71F3F08AC002EC15D /* XMEntryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMEntryViewController.h; sourceTree = "<group>"; };
 		03A766C81F3F08AC002EC15D /* XMEntryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMEntryViewController.m; sourceTree = "<group>"; };
+		03B235281F4731DB00CC71D6 /* XMLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMLoginViewController.h; sourceTree = "<group>"; };
+		03B235291F4731DB00CC71D6 /* XMLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMLoginViewController.m; sourceTree = "<group>"; };
 		03ECEC5C1F3F117200042CAA /* XMAdminViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMAdminViewController.h; sourceTree = "<group>"; };
 		03ECEC5D1F3F117200042CAA /* XMAdminViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMAdminViewController.m; sourceTree = "<group>"; };
 		A774C0DC8DB6B5493659E442 /* Pods-FinSmail.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinSmail.release.xcconfig"; path = "Pods/Target Support Files/Pods-FinSmail/Pods-FinSmail.release.xcconfig"; sourceTree = "<group>"; };
@@ -156,6 +159,8 @@
 			children = (
 				03ECEC5C1F3F117200042CAA /* XMAdminViewController.h */,
 				03ECEC5D1F3F117200042CAA /* XMAdminViewController.m */,
+				03B235281F4731DB00CC71D6 /* XMLoginViewController.h */,
+				03B235291F4731DB00CC71D6 /* XMLoginViewController.m */,
 			);
 			path = Admin;
 			sourceTree = "<group>";
@@ -254,11 +259,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-FinSmail/Pods-FinSmail-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYModel.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -311,6 +318,7 @@
 				03A766C41F3F0866002EC15D /* AppDelegate.m in Sources */,
 				03ECEC5E1F3F117200042CAA /* XMAdminViewController.m in Sources */,
 				032C541F1F41F20600B1E856 /* XMCollectionView.m in Sources */,
+				03B2352A1F4731DB00CC71D6 /* XMLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

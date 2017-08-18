@@ -9,22 +9,31 @@
 #import "XMEntryViewController.h"
 #import <Masonry/Masonry.h>
 #import "XMAdminViewController.h"
+#import "XMLoginViewController.h"
 #import "XMCollectionView.h"
+#import <SVProgressHUD/SVProgressHUD.h>
+
+@import WilddogAuth;
 
 @interface XMEntryCollectionCell : UICollectionViewCell
-
+@property (nonatomic, strong) UIImageView *icon;
 @end
 @implementation XMEntryCollectionCell
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-//        UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smail"]];
-//        [self.contentView addSubview:iconView];
-        self.contentView.backgroundColor = [UIColor grayColor];
-//        [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
-//        }];
+        UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smail"]];
+        self.icon = iconView;
+        [self.contentView addSubview:iconView];
+        [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
+        }];
     }
     return self;
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.contentView.backgroundColor = [UIColor whiteColor];
 }
 @end
 
@@ -39,6 +48,7 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setupView];
     }
     return self;
@@ -115,11 +125,13 @@
     XMEntryCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([XMEntryCollectionCell class]) forIndexPath:indexPath];
     
     if (self.entity.countStar < 0) {
+        [cell.icon setHidden:YES];
         cell.contentView.backgroundColor = [UIColor redColor];
     } else if (self.entity.countStar == 0) {
+        [cell.icon setHidden:YES];
         cell.contentView.backgroundColor = [UIColor grayColor];
     } else {
-        cell.contentView.backgroundColor = [UIColor greenColor];
+        [cell.icon setHidden:NO];
     }
 
     return cell;
@@ -166,13 +178,22 @@
 }
 
 - (void)handleAction:(id)sender {
-    XMAdminViewController *admin = [[XMAdminViewController alloc] initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:admin animated:YES];
+    if ([XMLoginViewController isLogin]) {
+        XMAdminViewController *admin = [[XMAdminViewController alloc] initWithNibName:nil bundle:nil];
+        [self.navigationController pushViewController:admin animated:YES];
+    } else {
+        XMLoginViewController *login = [[XMLoginViewController alloc] initWithNibName:nil bundle:nil];
+        [self.navigationController pushViewController:login animated:YES];
+    }
+    
+    
 }
 
 - (void)refresh {
+    [SVProgressHUD show];
     __weak typeof(self) weakSelf = self;
     [XMAdminViewController wrapDataWithComplete:^(XMAdminSmailWrapEntity *entity, NSError *error) {
+        [SVProgressHUD dismissAnimated:YES];
         if (!error) {
             weakSelf.wrapEntity = entity;
             
@@ -213,5 +234,23 @@
     XMAdminSmailRecordEntity *entity = [entityList objectAtIndex:indexPath.row];
     cell.entity = entity;
     return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [XMLoginViewController isLogin];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        [dataArray removeObjectAtIndex:indexPath.row];
+//        // Delete the row from the data source.
+//        [testTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        NSString *dateString = [self.wrapEntity.dateSorted objectAtIndex:indexPath.section];
+//        XMAdminSmailRecordEntity *record = [[self.wrapEntity.mapDate objectForKey:dateString] objectAtIndex:indexPath.row];
+//        NSMutableArray<XMAdminSmailRecordEntity *> *records = [self.wrapEntity.mapDate objectForKey:dateString];
+//        [records removeObjectAtIndex:indexPath.row];
+        
+        
+    }
 }
 @end
