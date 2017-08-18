@@ -183,7 +183,7 @@
     [WDGApp configureWithOptions:option];
     //获取一个指向根节点的 WDGSyncReference 实例
     WDGSyncReference *ref = [[WDGSync sync] referenceWithPath:@"/"];
-    [ref observeEventType:WDGDataEventTypeValue withBlock:^(WDGDataSnapshot *snapshot) {
+    [ref observeSingleEventOfType:WDGDataEventTypeValue withBlock:^(WDGDataSnapshot *snapshot) {
         NSLog(@"%@", snapshot.value);
         NSDictionary *result = snapshot.value;
         XMAdminSmailWrapEntity *entity = [XMAdminSmailWrapEntity yy_modelWithJSON:result];
@@ -213,7 +213,7 @@
 }
 
 - (void)handleAdd:(id)sender {
-    NSString *filePath = [XMAdminViewController filePath];
+    
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy-MM-dd";
@@ -228,80 +228,66 @@
 //    entity.dateHappen = dateHappen;
 //    entity.desc = self.tfDesc.text;
 //    entity.countStar = self.countStar?:0;
-    NSError *error;
-    NSData *dataJSON = [NSData dataWithContentsOfFile:filePath];
     
-    NSMutableDictionary *data = nil;
-    
-    if (dataJSON) {
-        data = [NSJSONSerialization JSONObjectWithData:dataJSON options:kNilOptions error:&error];
-        data = [data mutableCopy];
+    [self.class wrapDataWithComplete:^(XMAdminSmailWrapEntity *entity, NSError *error) {
+        NSMutableDictionary *data = [[entity yy_modelToJSONObject] mutableCopy];
+        if (!data) {
+            data = [NSMutableDictionary dictionary];
+        }
+        NSMutableDictionary *mapDate = [[data objectForKey:@"mapDate"] mutableCopy];
+        if (!mapDate) {
+            mapDate = [NSMutableDictionary dictionary];
+        }
+        [data setObject:mapDate forKey:@"mapDate"];
+        NSMutableArray *list = [[mapDate objectForKey:dateHappen] mutableCopy];
+        if (!list) {
+            list = [NSMutableArray array];
+        }
+        [list addObject:entityDic];
+        [mapDate setObject:list forKey:dateHappen];
+        
+        // 计算总值
+        NSInteger countStarTotal = 0;
+        NSArray<NSString *> *dateStringList = [mapDate allKeys];
+        for (NSString *dateString in dateStringList) {
+            NSArray<NSDictionary *> *entityList = [mapDate objectForKey:dateString];
+            for (NSDictionary *entity in entityList) {
+                countStarTotal = countStarTotal + [entity[@"countStar"] integerValue];
+            }
+        }
+        [data setObject:@(countStarTotal) forKey:@"countTotal"];
+        
+        // 排序
+        NSArray<NSString *> *dataSorted = [[mapDate allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSString * _Nonnull obj1, NSString *  _Nonnull obj2) {
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            formatter.dateFormat = @"yyyy-MM-dd";
+            NSDate *date1 = [formatter dateFromString:obj1];
+            NSDate *date2 = [formatter dateFromString:obj2];
+            return [date1 compare:date2];
+        }];
+        [data setObject:dataSorted forKey:@"dateSorted"];
+        
+        if (!error) {
+            //初始化 WDGApp
+            WDGOptions *option = [[WDGOptions alloc] initWithSyncURL:@"https://wd9641493984khzlrv.wilddogio.com"];
+            [WDGApp configureWithOptions:option];
+            //获取一个指向根节点的 WDGSyncReference 实例
+            WDGSyncReference *ref = [[WDGSync sync] reference];
+            [ref setValue:data withCompletionBlock:^(NSError * _Nullable error, WDGSyncReference * _Nonnull ref) {
+                if (error) {
+                    [self alert:error.localizedDescription];
+                } else {
+                    [self alert:@"success save to cloud"];
+                }
+            }];
+        }
+        
         if (error) {
             [self alert:error.localizedDescription];
         }
-    }
-    
-    
-    if (!data) {
-        data = [NSMutableDictionary dictionary];
-    }
-    NSMutableDictionary *mapDate = [[data objectForKey:@"mapDate"] mutableCopy];
-    if (!mapDate) {
-        mapDate = [NSMutableDictionary dictionary];
-    }
-    [data setObject:mapDate forKey:@"mapDate"];
-    NSMutableArray *list = [[mapDate objectForKey:dateHappen] mutableCopy];
-    if (!list) {
-        list = [NSMutableArray array];
-    }
-    [list addObject:entityDic];
-    [mapDate setObject:list forKey:dateHappen];
-    
-    // 计算总值
-    NSInteger countStarTotal = 0;
-    NSArray<NSString *> *dateStringList = [mapDate allKeys];
-    for (NSString *dateString in dateStringList) {
-        NSArray<NSDictionary *> *entityList = [mapDate objectForKey:dateString];
-        for (NSDictionary *entity in entityList) {
-            countStarTotal = countStarTotal + [entity[@"countStar"] integerValue];
-        }
-    }
-    [data setObject:@(countStarTotal) forKey:@"countTotal"];
-    
-    // 排序
-    NSArray<NSString *> *dataSorted = [[mapDate allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSString * _Nonnull obj1, NSString *  _Nonnull obj2) {
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyyy-MM-dd";
-        NSDate *date1 = [formatter dateFromString:obj1];
-        NSDate *date2 = [formatter dateFromString:obj2];
-        return [date1 compare:date2];
     }];
-    [data setObject:dataSorted forKey:@"dateSorted"];
     
-    // json 转换
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted error:&error];
-    NSString *jsonStr =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
-    if (!error) {
-        [jsonStr writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
-        
-        //初始化 WDGApp
-        WDGOptions *option = [[WDGOptions alloc] initWithSyncURL:@"https://wd9641493984khzlrv.wilddogio.com"];
-        [WDGApp configureWithOptions:option];
-        //获取一个指向根节点的 WDGSyncReference 实例
-        WDGSyncReference *ref = [[WDGSync sync] reference];
-        [ref setValue:data withCompletionBlock:^(NSError * _Nullable error, WDGSyncReference * _Nonnull ref) {
-            if (error) {
-                [self alert:error.localizedDescription];
-            } else {
-                [self alert:@"success save to cloud"];
-            }
-        }];
-    }
-    
-    if (error) {
-        [self alert:error.localizedDescription];
-    }
 }
 
 - (void)alert:(NSString *)message {
