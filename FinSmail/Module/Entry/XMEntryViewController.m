@@ -17,11 +17,12 @@
 @implementation XMEntryCollectionCell
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smail"]];
-        [self.contentView addSubview:iconView];
-        [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
-        }];
+//        UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smail"]];
+//        [self.contentView addSubview:iconView];
+        self.contentView.backgroundColor = [UIColor grayColor];
+//        [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
+//        }];
     }
     return self;
 }
@@ -58,12 +59,15 @@
     XMCollectionView *collectionView = [[XMCollectionView alloc] initWithFrame:self.contentView.bounds collectionViewLayout:layout];
     self.collectionView = collectionView;
     [container addSubview:collectionView];
+    
+    
     [container mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsMake(12, 16, 12, 16));
     }];
     
     labelDesc.numberOfLines = 0;
     labelDesc.text = @"no desc";
+    [labelDesc setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     [labelDesc mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.mas_equalTo(0);
     }];
@@ -76,7 +80,6 @@
         make.top.mas_equalTo(labelDesc.mas_bottom).offset(12);
         make.left.right.mas_equalTo(0);
         make.bottom.mas_equalTo(0);
-        make.height.mas_greaterThanOrEqualTo(44);
     }];
 }
 
@@ -93,6 +96,8 @@
     
     self.labelDesc.text = entity.desc;
     [self.collectionView reloadData];
+    [self layoutIfNeeded];
+    [self.collectionView reloadData];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -100,13 +105,33 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.entity.countStar;
+    if (self.entity.countStar == 0) {
+        return 1;
+    }
+    return ABS(self.entity.countStar);
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     XMEntryCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([XMEntryCollectionCell class]) forIndexPath:indexPath];
+    
+    if (self.entity.countStar < 0) {
+        cell.contentView.backgroundColor = [UIColor redColor];
+    } else if (self.entity.countStar == 0) {
+        cell.contentView.backgroundColor = [UIColor grayColor];
+    } else {
+        cell.contentView.backgroundColor = [UIColor greenColor];
+    }
 
     return cell;
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.entity = nil;
+    self.labelDesc.text = nil;
+    [self.collectionView reloadData];
+    [self setNeedsLayout];
+    [self.collectionView reloadData];
 }
 @end
 

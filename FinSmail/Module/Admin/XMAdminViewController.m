@@ -311,11 +311,11 @@
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [NSString stringWithFormat:@"%ld", row];
+    return [NSString stringWithFormat:@"%ld", row-49];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.countStar = row;
+    self.countStar = row-49;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
