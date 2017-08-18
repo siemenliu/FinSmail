@@ -23,6 +23,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
+## Wilddog
+
+https://www.wilddog.com/terms/sa
+
+## WilddogSync
+
+Copyright 2016 Wilddog
+
 ## YYModel
 
 The MIT License (MIT)

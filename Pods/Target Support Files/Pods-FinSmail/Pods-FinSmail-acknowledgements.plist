@@ -42,6 +42,26 @@ THE SOFTWARE.</string>
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>https://www.wilddog.com/terms/sa</string>
+			<key>License</key>
+			<string>Copy right</string>
+			<key>Title</key>
+			<string>Wilddog</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
+			<string>Copyright 2016 Wilddog</string>
+			<key>License</key>
+			<string>Copyright</string>
+			<key>Title</key>
+			<string>WilddogSync</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>The MIT License (MIT)
 
 Copyright (c) 2015 ibireme &lt;ibireme@gmail.com&gt;

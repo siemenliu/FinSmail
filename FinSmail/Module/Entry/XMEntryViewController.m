@@ -146,17 +146,23 @@
 }
 
 - (void)refresh {
-    XMAdminSmailWrapEntity *wrapEntity = [XMAdminViewController wrapData];
-    self.wrapEntity = wrapEntity;
-    
-    // 标题更新
-    self.title = [NSString stringWithFormat:@"%ld", wrapEntity.countTotal];
-    
-    // 数据更新
-    [self.tableView reloadData];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
-    });
+    __weak typeof(self) weakSelf = self;
+    [XMAdminViewController wrapDataWithComplete:^(XMAdminSmailWrapEntity *entity, NSError *error) {
+        if (!error) {
+            weakSelf.wrapEntity = entity;
+            
+            // 标题更新
+            weakSelf.title = [NSString stringWithFormat:@"%ld", entity.countTotal];
+            
+            // 数据更新
+            [weakSelf.tableView reloadData];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.tableView reloadData];
+            });
+        } else {
+            
+        }
+    }];
 }
 
 #pragma mark - delegate and datasource

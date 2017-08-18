@@ -10,6 +10,8 @@
 #import <Masonry/Masonry.h>
 #import <YYModel/YYModel.h>
 
+@import Wilddog;
+
 @implementation XMAdminSmailWrapEntity
 - (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
     
@@ -176,24 +178,38 @@
     return filePath;
 }
 
-+ (XMAdminSmailWrapEntity *)wrapData {
-    NSString *filePath = [XMAdminViewController filePath];
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    
-    if (!data) {
-        return nil;
-    }
-    
-    NSError *error;
-    NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    XMAdminSmailWrapEntity *wrapEntity = nil;
-    if (!error) {
-        wrapEntity = [XMAdminSmailWrapEntity yy_modelWithJSON:dataDic];
-    } else {
-        NSLog(@"%@", error.localizedDescription);
-    }
-    
-    return wrapEntity;
++ (void)wrapDataWithComplete:(void (^)(XMAdminSmailWrapEntity *entity, NSError *error))complete {
+    WDGOptions *option = [[WDGOptions alloc] initWithSyncURL:@"https://wd9641493984khzlrv.wilddogio.com"];
+    [WDGApp configureWithOptions:option];
+    //获取一个指向根节点的 WDGSyncReference 实例
+    WDGSyncReference *ref = [[WDGSync sync] referenceWithPath:@"/"];
+    [ref observeEventType:WDGDataEventTypeValue withBlock:^(WDGDataSnapshot *snapshot) {
+        NSLog(@"%@", snapshot.value);
+        NSDictionary *result = snapshot.value;
+        XMAdminSmailWrapEntity *entity = [XMAdminSmailWrapEntity yy_modelWithJSON:result];
+        complete(entity, nil);
+    } withCancelBlock:^(NSError *error) {
+        NSLog(@"%@", error.description);
+        complete(nil, error);
+    }];
+//
+//    NSString *filePath = [XMAdminViewController filePath];
+//    NSData *data = [NSData dataWithContentsOfFile:filePath];
+//
+//    if (!data) {
+//        return nil;
+//    }
+//
+//    NSError *error;
+//    NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+//    XMAdminSmailWrapEntity *wrapEntity = nil;
+//    if (!error) {
+//        wrapEntity = [XMAdminSmailWrapEntity yy_modelWithJSON:dataDic];
+//    } else {
+//        NSLog(@"%@", error.localizedDescription);
+//    }
+//
+//    return wrapEntity;
 }
 
 - (void)handleAdd:(id)sender {
@@ -268,12 +284,23 @@
     
     if (!error) {
         [jsonStr writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+        
+        //初始化 WDGApp
+        WDGOptions *option = [[WDGOptions alloc] initWithSyncURL:@"https://wd9641493984khzlrv.wilddogio.com"];
+        [WDGApp configureWithOptions:option];
+        //获取一个指向根节点的 WDGSyncReference 实例
+        WDGSyncReference *ref = [[WDGSync sync] reference];
+        [ref setValue:data withCompletionBlock:^(NSError * _Nullable error, WDGSyncReference * _Nonnull ref) {
+            if (error) {
+                [self alert:error.localizedDescription];
+            } else {
+                [self alert:@"success save to cloud"];
+            }
+        }];
     }
     
     if (error) {
         [self alert:error.localizedDescription];
-    } else {
-        [self alert:@"success"];
     }
 }
 

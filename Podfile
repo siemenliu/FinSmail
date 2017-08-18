@@ -11,4 +11,5 @@ target 'FinSmail' do
   # Pods for FinSmail
   pod 'Masonry', :inhibit_warnings => true
   pod 'YYModel'
+  pod 'Wilddog/Sync'
 end

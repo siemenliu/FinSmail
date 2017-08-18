@@ -1,15 +1,27 @@
 PODS:
   - Masonry (1.0.2)
+  - Wilddog/Public (2.3.11):
+    - WilddogCore (~> 2.0.11)
+  - Wilddog/Sync (2.3.11):
+    - Wilddog/Public
+    - WilddogSync (~> 2.3.11)
+  - WilddogCore (2.0.11)
+  - WilddogSync (2.3.11):
+    - WilddogCore (~> 2.0.11)
   - YYModel (1.0.4)
 
 DEPENDENCIES:
   - Masonry
+  - Wilddog/Sync
   - YYModel
 
 SPEC CHECKSUMS:
   Masonry: 1a8c8de06540777a02c86cc2abfc3950ede7cd22
+  Wilddog: 26d5f0f8d75a03381b0f73ce632cb896d978b1bd
+  WilddogCore: 515371b98a3298ced567033df3348f9f0e3b2dc0
+  WilddogSync: fb3dc0c95440d8be8f382100d1677b56c72f1b69
   YYModel: 610bd0c0a0c707f7676874087e37aa4f40fb92de
 
-PODFILE CHECKSUM: 2b08572955ddfccb88349b87aa85437f635ff73e
+PODFILE CHECKSUM: 75a50b828c7f27caa30cf564d2e9b616dd8a2cce
 
 COCOAPODS: 1.3.1
