@@ -67,6 +67,7 @@
     layout.minimumInteritemSpacing = 4;
     layout.itemSize = [self itemSize];
     XMCollectionView *collectionView = [[XMCollectionView alloc] initWithFrame:self.contentView.bounds collectionViewLayout:layout];
+    collectionView.scrollEnabled = NO;
     self.collectionView = collectionView;
     [container addSubview:collectionView];
     
