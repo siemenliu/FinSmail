@@ -14,4 +14,5 @@ target 'FinSmail' do
   pod 'Wilddog/Sync'
   pod 'Wilddog/Auth'
   pod 'SVProgressHUD'
+  pod 'UMengAnalytics'
 end
