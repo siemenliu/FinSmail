@@ -18,7 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    UMConfigInstance.appKey = @"";
+    UMConfigInstance.appKey = @"59a0b4ab75ca355b04001ab1";
     UMConfigInstance.channelId = @"Xcode";
     [MobClick startWithConfigure:UMConfigInstance];
     

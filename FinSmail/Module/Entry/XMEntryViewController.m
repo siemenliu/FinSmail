@@ -16,15 +16,24 @@
 @import WilddogAuth;
 
 @interface XMEntryCollectionCell : UICollectionViewCell
-@property (nonatomic, strong) UIImageView *icon;
+//@property (nonatomic, strong) UIImageView *icon;
+@property (nonatomic, strong) UILabel *label;
 @end
 @implementation XMEntryCollectionCell
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smail"]];
-        self.icon = iconView;
-        [self.contentView addSubview:iconView];
-        [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smail"]];
+//        self.icon = iconView;
+//        [self.contentView addSubview:iconView];
+//        [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
+//        }];
+        UILabel *label = [[UILabel alloc] init];
+        label.text = @"😄";
+        label.font = [UIFont systemFontOfSize:24];
+        self.label = label;
+        [self.contentView addSubview:label];
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
         }];
     }
@@ -108,7 +117,6 @@
     self.labelDesc.text = entity.desc;
     [self.collectionView reloadData];
     [self layoutIfNeeded];
-    [self.collectionView reloadData];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -126,13 +134,11 @@
     XMEntryCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([XMEntryCollectionCell class]) forIndexPath:indexPath];
     
     if (self.entity.countStar < 0) {
-        [cell.icon setHidden:YES];
-        cell.contentView.backgroundColor = [UIColor redColor];
+        cell.label.text = @"🌚";
     } else if (self.entity.countStar == 0) {
-        [cell.icon setHidden:YES];
-        cell.contentView.backgroundColor = [UIColor grayColor];
+        cell.label.text = @"💁🏻‍♂️";
     } else {
-        [cell.icon setHidden:NO];
+        cell.label.text = @"😄";
     }
 
     return cell;

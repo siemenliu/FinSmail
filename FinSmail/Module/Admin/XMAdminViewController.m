@@ -323,15 +323,15 @@
 
 // returns the # of rows in each component..
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return 100;
+    return 201;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [NSString stringWithFormat:@"%ld", row-49];
+    return [NSString stringWithFormat:@"%ld", row-100];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.countStar = row-49;
+    self.countStar = row-100;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
