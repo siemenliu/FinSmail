@@ -8,10 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, XMAdminSmailRecordType) {
+    XMAdminSmailRecordTypeFine, // 罚款
+    XMAdminSmailRecordTypeBuy, // 消费
+    XMAdminSmailRecordTypeReward, // 酬劳
+    XMAdminSmailRecordTypeBalance // 平衡
+};
+
 @interface XMAdminSmailRecordEntity : NSObject
 @property (nonatomic, copy) NSString *dateHappen;
 @property (nonatomic, copy) NSString *desc;
 @property (nonatomic, assign) NSInteger countStar;
+@property (nonatomic, assign) XMAdminSmailRecordType type;
 - (NSDate *)dateFromDateHappen;
 @end
 

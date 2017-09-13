@@ -133,10 +133,12 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     XMEntryCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([XMEntryCollectionCell class]) forIndexPath:indexPath];
     
-    if (self.entity.countStar < 0) {
+    if (self.entity.type == XMAdminSmailRecordTypeFine) {
         cell.label.text = @"🌚";
-    } else if (self.entity.countStar == 0) {
+    } else if (self.entity.type == XMAdminSmailRecordTypeBalance) {
         cell.label.text = @"💁🏻‍♂️";
+    } else if (self.entity.type == XMAdminSmailRecordTypeBuy) {
+        cell.label.text = @"💸";
     } else {
         cell.label.text = @"😄";
     }

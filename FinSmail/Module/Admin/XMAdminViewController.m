@@ -49,6 +49,19 @@
     NSDate *date = [formatter dateFromString:self.dateHappen];
     return date;
 }
+
+// 增加type字段初始化
+//- (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
+//    NSInteger countStar = [dic[@"countStar"] integerValue];
+//    if (countStar > 0) {
+//        _type = XMAdminSmailRecordTypeReward;
+//    } else if (countStar < 0) {
+//        _type = XMAdminSmailRecordTypeFine;
+//    } else {
+//        _type = XMAdminSmailRecordTypeBalance;
+//    }
+//    return YES;
+//}
 @end
 
 @interface XMAdminViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate>
@@ -200,24 +213,6 @@
         NSLog(@"%@", error.description);
         complete(nil, error);
     }];
-//
-//    NSString *filePath = [XMAdminViewController filePath];
-//    NSData *data = [NSData dataWithContentsOfFile:filePath];
-//
-//    if (!data) {
-//        return nil;
-//    }
-//
-//    NSError *error;
-//    NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-//    XMAdminSmailWrapEntity *wrapEntity = nil;
-//    if (!error) {
-//        wrapEntity = [XMAdminSmailWrapEntity yy_modelWithJSON:dataDic];
-//    } else {
-//        NSLog(@"%@", error.localizedDescription);
-//    }
-//
-//    return wrapEntity;
 }
 
 - (void)handleAdd:(id)sender {
