@@ -159,8 +159,21 @@
 @end
 
 @implementation XMEntryViewController
+
+- (instancetype)initWithStyle:(UITableViewStyle)style {
+    if (self = [super initWithStyle:style]) {
+        self.title = @"笑脸账单";
+        
+        // tabbaritem
+        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:self.title image:[UIImage imageNamed:@"billing"] tag:0];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     
     // 视图基础
     self.view.backgroundColor = [UIColor whiteColor];
