@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "UMMobClick/MobClick.h"
+#import "XMEntryViewController.h"
 
 @interface AppDelegate ()
 
@@ -21,6 +22,17 @@
     UMConfigInstance.appKey = @"59a0b4ab75ca355b04001ab1";
     UMConfigInstance.channelId = @"Xcode";
     [MobClick startWithConfigure:UMConfigInstance];
+    
+    UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
+    XMEntryViewController *entryViewController = [[XMEntryViewController alloc] initWithStyle:UITableViewStylePlain];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:entryViewController];
+    
+    window.rootViewController = navigationController;
+    
+    self.window = window;
+    [window makeKeyAndVisible];
     
     return YES;
 }
