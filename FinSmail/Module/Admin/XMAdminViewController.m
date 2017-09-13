@@ -67,7 +67,8 @@
 @interface XMAdminViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate>
 @property (nonatomic, strong) UIDatePicker *pickerDate;
 @property (nonatomic, strong) UITextField *tfDesc;
-@property (nonatomic, assign) NSInteger countStar;
+@property (nonatomic, strong) UIPickerView *pickerViewCount;
+@property (nonatomic, strong) UISegmentedControl *segmentedControlType;
 @end
 
 @implementation XMAdminViewController
@@ -127,8 +128,14 @@
     self.tfDesc = tfDesc;
     [container addSubview:tfDesc];
     
+    /// 类型选择
+    UISegmentedControl *segmentType = [[UISegmentedControl alloc] init];
+    self.segmentedControlType = segmentType;
+    [container addSubview:segmentType];
+    
     /// 星星变量
     UIPickerView *pickerView = [[UIPickerView alloc] init];
+    self.pickerViewCount = pickerView;
     [container addSubview:pickerView];
     
     /// 添加
@@ -152,14 +159,26 @@
     [tfDesc mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(picker);
         make.top.mas_equalTo(picker.mas_bottom).offset(12);
+        make.height.mas_equalTo(44);
+    }];
+    
+    
+    [segmentType insertSegmentWithTitle:@"平衡💁🏻‍♂️" atIndex:0 animated:NO];
+    [segmentType insertSegmentWithTitle:@"奖励😄" atIndex:0 animated:NO];
+    [segmentType insertSegmentWithTitle:@"消费💸" atIndex:0 animated:NO];
+    [segmentType insertSegmentWithTitle:@"罚金🌚" atIndex:0 animated:NO];
+    [segmentType setSelectedSegmentIndex:2];
+    [segmentType mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(tfDesc.mas_bottom).offset(12);
+        make.right.left.mas_equalTo(tfDesc);
     }];
     
     pickerView.dataSource = self;
     pickerView.delegate = self;
-    [pickerView selectRow:0 inComponent:0 animated:NO];
+    [pickerView selectRow:113 inComponent:0 animated:NO];
     [pickerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(tfDesc.mas_bottom).offset(12);
-        make.right.left.mas_equalTo(tfDesc);
+        make.top.mas_equalTo(segmentType.mas_bottom).offset(12);
+        make.right.left.mas_equalTo(segmentType);
     }];
     
     btnAdd.layer.borderColor = [UIColor grayColor].CGColor;
@@ -225,7 +244,8 @@
     NSDictionary *entityDic = @{
                                 @"dateHappen": dateHappen,
                                 @"desc": self.tfDesc.text?:@"No Description",
-                                @"countStar": @(self.countStar?:0)
+                                @"countStar": @([self.pickerViewCount selectedRowInComponent:0]-100?:0),
+                                @"type": @(self.segmentedControlType.selectedSegmentIndex)
                                 };
     
     XMAdminSmailRecordEntity *record = [XMAdminSmailRecordEntity yy_modelWithJSON:entityDic];
@@ -323,10 +343,6 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     return [NSString stringWithFormat:@"%ld", row-100];
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.countStar = row-100;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
