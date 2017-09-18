@@ -18,18 +18,11 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // 初始化
-    [self setup];
     
-    return YES;
-}
-
-- (void)setup {
-    [self setupUM];
-    [self setupWindow];
-}
-
-- (void)setupWindow {
+    UMConfigInstance.appKey = @"59a0b4ab75ca355b04001ab1";
+    UMConfigInstance.channelId = @"Xcode";
+    [MobClick startWithConfigure:UMConfigInstance];
+    
     UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
     XMTabBarViewController *tabBarController = [[XMTabBarViewController alloc] initWithNibName:nil bundle:nil];
@@ -38,13 +31,10 @@
     
     self.window = window;
     [window makeKeyAndVisible];
+    
+    return YES;
 }
 
-- (void)setupUM {
-    UMConfigInstance.appKey = @"59a0b4ab75ca355b04001ab1";
-    UMConfigInstance.channelId = @"Xcode";
-    [MobClick startWithConfigure:UMConfigInstance];
-}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
