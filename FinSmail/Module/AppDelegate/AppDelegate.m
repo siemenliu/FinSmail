@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "UMMobClick/MobClick.h"
-#import "XMTabBarViewController.h"
+#import "XMEntryViewController.h"
 
 @interface AppDelegate ()
 
@@ -25,9 +25,11 @@
     
     UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    XMTabBarViewController *tabBarController = [[XMTabBarViewController alloc] initWithNibName:nil bundle:nil];
+    XMEntryViewController *entryViewController = [[XMEntryViewController alloc] initWithStyle:UITableViewStylePlain];
     
-    window.rootViewController = tabBarController;
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:entryViewController];
+    
+    window.rootViewController = navigationController;
     
     self.window = window;
     [window makeKeyAndVisible];

@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		032C541F1F41F20600B1E856 /* XMCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 032C541E1F41F20600B1E856 /* XMCollectionView.m */; };
-		034889FF1F69705F00DCAF1A /* XMTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034889FE1F69705F00DCAF1A /* XMTabBarViewController.m */; };
-		03488A031F69779900DCAF1A /* XMSubAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03488A021F69779900DCAF1A /* XMSubAccountViewController.m */; };
 		03A766C21F3F085D002EC15D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03A766B61F3F0849002EC15D /* LaunchScreen.storyboard */; };
 		03A766C31F3F0860002EC15D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03A766B51F3F0849002EC15D /* Assets.xcassets */; };
 		03A766C41F3F0866002EC15D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A766BE1F3F0849002EC15D /* AppDelegate.m */; };
@@ -23,10 +21,6 @@
 /* Begin PBXFileReference section */
 		032C541D1F41F20600B1E856 /* XMCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMCollectionView.h; sourceTree = "<group>"; };
 		032C541E1F41F20600B1E856 /* XMCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMCollectionView.m; sourceTree = "<group>"; };
-		034889FD1F69705F00DCAF1A /* XMTabBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMTabBarViewController.h; sourceTree = "<group>"; };
-		034889FE1F69705F00DCAF1A /* XMTabBarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMTabBarViewController.m; sourceTree = "<group>"; };
-		03488A011F69779900DCAF1A /* XMSubAccountViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMSubAccountViewController.h; sourceTree = "<group>"; };
-		03488A021F69779900DCAF1A /* XMSubAccountViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMSubAccountViewController.m; sourceTree = "<group>"; };
 		03A7669A1F3F0797002EC15D /* FinSmail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinSmail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03A766B51F3F0849002EC15D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		03A766B71F3F0849002EC15D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -74,15 +68,6 @@
 			path = XMCollectionView;
 			sourceTree = "<group>";
 		};
-		03488A001F69777C00DCAF1A /* SubAccount */ = {
-			isa = PBXGroup;
-			children = (
-				03488A011F69779900DCAF1A /* XMSubAccountViewController.h */,
-				03488A021F69779900DCAF1A /* XMSubAccountViewController.m */,
-			);
-			path = SubAccount;
-			sourceTree = "<group>";
-		};
 		03A766911F3F0796002EC15D = {
 			isa = PBXGroup;
 			children = (
@@ -123,7 +108,6 @@
 		03A766BB1F3F0849002EC15D /* Module */ = {
 			isa = PBXGroup;
 			children = (
-				03488A001F69777C00DCAF1A /* SubAccount */,
 				032C54181F41F16C00B1E856 /* Common */,
 				03ECEC5B1F3F115500042CAA /* Admin */,
 				03A766C61F3F0870002EC15D /* Entry */,
@@ -138,8 +122,6 @@
 				03A766BD1F3F0849002EC15D /* AppDelegate.h */,
 				03A766BE1F3F0849002EC15D /* AppDelegate.m */,
 				03A766BF1F3F0849002EC15D /* main.m */,
-				034889FD1F69705F00DCAF1A /* XMTabBarViewController.h */,
-				034889FE1F69705F00DCAF1A /* XMTabBarViewController.m */,
 			);
 			path = AppDelegate;
 			sourceTree = "<group>";
@@ -313,9 +295,7 @@
 			files = (
 				03A766C51F3F0868002EC15D /* main.m in Sources */,
 				03A766C91F3F08AC002EC15D /* XMEntryViewController.m in Sources */,
-				03488A031F69779900DCAF1A /* XMSubAccountViewController.m in Sources */,
 				03A766C41F3F0866002EC15D /* AppDelegate.m in Sources */,
-				034889FF1F69705F00DCAF1A /* XMTabBarViewController.m in Sources */,
 				03ECEC5E1F3F117200042CAA /* XMAdminViewController.m in Sources */,
 				032C541F1F41F20600B1E856 /* XMCollectionView.m in Sources */,
 				03B2352A1F4731DB00CC71D6 /* XMLoginViewController.m in Sources */,
